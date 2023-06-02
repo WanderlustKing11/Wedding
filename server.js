@@ -1,12 +1,20 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const https = require('https');
 const port = process.env.PORT || 3000;
+const path = require('path');
 const { google } = require('googleapis');
 const sheets = google.sheets('v4');
 
+console.log(process.env.SSID);
+console.log(process.env.CREDENTIALS);
+
 // Load Google Sheets credentials and authenticate
-const credentials = require('./path/to/your/credentials.json');
+const credentials = {
+// ...
+}
+
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
@@ -14,6 +22,18 @@ const auth = new google.auth.GoogleAuth({
 google.options({ auth });
 
 // middleware and other server configuration
+app.use(express.static(path.join(__dirname, 'public'), { extensions: ['css'] }));
+
+app.get('/', (req, res) => {
+  const indexPath = path.join(__dirname, 'index.html');
+  res.sendFile(indexPath);
+});
+
+
+app.get('/rsvp', (req, res) => {
+  const rsvpPath = path.join(__dirname, 'rsvp.html');
+  res.sendFile(rsvpPath)
+});
 
 // RSVP endpoint
 app.post('/rsvp', express.json(), async (req, res) => {
@@ -27,10 +47,10 @@ app.post('/rsvp', express.json(), async (req, res) => {
       const { firstName, address } = guestData;
 
       // Update Google Sheets with the RSVP status
-      const spreadsheetId = 'your-spreadsheet-id';
-      const range = 'Sheet1!D2:E'; // Assuming RSVP status is in column D, starting from row 2
+      const spreadsheetId = process.env.SSID;
+      const range = 'Wedding Guests!E2'; // "RSVP status" is in column E, starting from row 2
       const resource = {
-        values: [[rsvpStatus, lastName]], // Update the RSVP status and last name
+        values: [[rsvpStatus]], // Update the RSVP status
       };
 
       await sheets.spreadsheets.values.update({
