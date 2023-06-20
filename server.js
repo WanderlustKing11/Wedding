@@ -1,28 +1,32 @@
-require('dotenv').config();
 const express = require('express');
-const app = express();
 const https = require('https');
-const port = process.env.PORT || 3000;
 const path = require('path');
+const ejs = require('ejs');
 const { google } = require('googleapis');
-const sheets = google.sheets('v4');
+const { log } = require('console');
+require('dotenv').config();
 
-console.log(process.env.SSID);
-console.log(process.env.CREDENTIALS);
+const app = express();
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true })); // enables us to use forms
+app.use('/public/css', express.static(__dirname + '/public/src/style.css'));
 
-// Load Google Sheets credentials and authenticate
-const credentials = {
-// ...
-}
+// Google Auth //
+const authenticate = async () => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
 
-const auth = new google.auth.GoogleAuth({
-  credentials,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
-google.options({ auth });
+    // Create client instance for auth
+    const client = await auth.getClient();
+    return client;
+};
 
-// middleware and other server configuration
-app.use(express.static(path.join(__dirname, 'public'), { extensions: ['css'] }));
+// GLOBALS //
+
+const responseYes = "Attending";
+const responseNo = "Not attending";
 
 app.get('/', (req, res) => {
   const indexPath = path.join(__dirname, 'index.html');
