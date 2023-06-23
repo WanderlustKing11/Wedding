@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Heather & Doug</title>
+    <link rel='stylesheet' href='../../public/src/style.css'>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class='mobile-menu-toggle'>
+        <input type='checkbox' id='menu-toggle'>
+        <label for='menu-toggle'>
+          <span id='hamburger-icon'>
+            <img src='../../public/src/images/hamburger-48.png' alt='Hamburger Icon'>
+          </span>
+        </label>
+      </div>
+      <ul class='menu'>  
+        <% const pages = ['About Us', 'RSVP', 'Photos', 'Details']; %>
+        <% pages.forEach(page => { %>
+          <li><a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>"><%= page %></a></li>
+        <% }); %>
+      </ul>
+    </nav>
+  </header>
+

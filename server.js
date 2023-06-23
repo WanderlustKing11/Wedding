@@ -5,11 +5,16 @@ const ejs = require('ejs');
 const { google } = require('googleapis');
 const { log } = require('console');
 require('dotenv').config();
+const port = process.env.PORT || 3000;
 
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true })); // enables us to use forms
-app.use('/public/css', express.static(__dirname + '/public/src/style.css'));
+app.use('/public/src', express.static(__dirname + '/public/src'));
+
+// Instance of Google Sheets API
+const googleSheets = google.sheets({ version: 'v4' });
+const spreadsheetId = process.env.SSID;
 
 // Google Auth //
 const authenticate = async () => {
@@ -23,14 +28,12 @@ const authenticate = async () => {
     return client;
 };
 
-// GLOBALS //
 
 const responseYes = "Attending";
 const responseNo = "Not attending";
 
-app.get('/', (req, res) => {
-  const indexPath = path.join(__dirname, 'index.html');
-  res.sendFile(indexPath);
+app.get('/', async (req, res) => {
+  res.render('home');
 });
 
 

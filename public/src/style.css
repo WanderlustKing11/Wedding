@@ -8,7 +8,90 @@
   font-weight: 700;
 }
 
-html, body {
+/*=========================
+  HEADER / NAVBAR / FOOTER
+=========================*/
+
+/* CSS for mobile-first navigation */
+
+.mobile-menu-toggle {
+  display: none;
+}
+
+.menu {
+  list-style: none;
+}
+
+.menu li {
+  display: block;
+}
+
+.menu a {
+  display: block;
+  text-decoration: none;
+  padding: 10px;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+#hamburger-icon {
+  display: inline-block;
+  width: 30px; /* Adjust the width and height as needed */
+  height: 30px;
+  background-size: cover; /* Adjust the background size as needed */
+  animation: hamburgerAnimation 1s infinite paused; /* Add the animation property */
+}
+
+@keyframes hamburgerAnimation {
+  from {
+    background-position: 0 0; /* Starting position of the animation */
+  }
+  to {
+    background-position: -900px 0; /* Ending position of the animation */
+  }
+}
+
+/* Add the paused class to pause the animation */
+#hamburger-icon.paused {
+  animation-play-state: paused;
+}
+
+
+/* Hamburger icon styles */
+.mobile-menu-toggle label {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+}
+
+/* Media query for responsive behavior */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    padding: 0;
+  }
+
+  .menu li {
+    margin-bottom: 10px;
+  }
+
+  .menu a {
+    display: block;
+    text-align: center;
+  }
+
+  .menu input[type="checkbox"]:checked ~ ul.menu {
+    display: block;
+  }
+}
+
+/* html, body {
   height: 100%;
   margin: 0;
 }
@@ -29,13 +112,13 @@ footer {
 footer .footer_wrapper {
   display: flex;
   align-items: flex-end;
-}
+} */
 
 /*====================
         MAIN PAGE
 ======================*/
 
-.main-page {
+/* .main-page {
   background: #000 url('./images/Doug\ and\ heather-92.JPG');
   background-size: cover;
   background-repeat: no-repeat;
@@ -70,13 +153,13 @@ footer .footer_wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 /*====================
         RSVP PAGE
 ======================*/
 
-.rsvp-page {
+/* .rsvp-page {
   background: #000 url('./images/Doug\ and\ heather-90.JPG');
   background-position-y: -5rem;
   background-size: cover;
@@ -88,5 +171,5 @@ footer .footer_wrapper {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 
