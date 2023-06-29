@@ -6,7 +6,7 @@ hamburgerIcon.addEventListener('click', () => {
   if (!animationPlayed) {
     menu.classList.toggle('hidden');
     hamburgerIcon.classList.add('active');
-    hamburgerIcon.style.backgroundImage = 'url(/public/src/images/hamburger.gif)'; // Replace with the path to your GIF file
+    hamburgerIcon.innerHTML = `<img src='/public/src/images/hamburger.gif' alt='Hamburger Icon' />`; // Replace with the path to your GIF file
     hamburgerIcon.disabled = true;
     hamburgerIcon.removeEventListener('click', handleClick);
     animationPlayed = true;
@@ -18,12 +18,11 @@ function handleClick() {
   hamburgerIcon.click();
 }
 
-hamburgerIcon.addEventListener('animationiteration', () => {
+hamburgerIcon.addEventListener('animationend', () => {
   if (animationPlayed) {
     hamburgerIcon.classList.remove('active');
     hamburgerIcon.disabled = false;
     hamburgerIcon.addEventListener('click', handleClick);
-    hamburgerIcon.style.backgroundImage = 'url(/public/src/images/icon.png)'; // Replace with the path to your static icon image
-    animationPlayed = false;
+    hamburgerIcon.innerHTML = `<img src='/public/src/images/hamburger-icon.png' alt='Hamburger Icon' />`; // Replace with the path to your image file
   }
 });
