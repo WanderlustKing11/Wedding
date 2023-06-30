@@ -45,6 +45,7 @@ main {
   outline: none;
   border: none;
   left: 85%;
+  z-index: 5;
 }
 
 .hamburger .bar, .hamburger::after, .hamburger::before {
