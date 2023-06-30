@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Heather & Doug</title>
-    <link rel='stylesheet' href='../../public/src/style.css'>
-</head>
-<body>
-  <header>
-    <nav>
-      <div class='mobile-menu-toggle'>
-        <button class='hamburger'>
-          <div class='bar'></div>
-        </button>
-      </div>
-      <ul class='menu'>  
-        <% const pages = ['About Us', 'RSVP', 'Photos', 'Details']; %>
-        <% pages.forEach(page => { %>
-          <li><a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>"><%= page %></a></li>
-        <% }); %>
-      </ul>
-    </nav>
-    <nav class='mobile-menu'>
-      <% pages.forEach(page => { %>
-        <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>"><%= page %></a>
+<header>
+  <nav>
+    <div class='mobile-menu-toggle'>
+      <button
+        class='hamburger'
+        aria-label='Toggle mobile menu'
+        aria-expanded='false'
+        aria-controls='mobile-menu'
+      >
+        <div class='bar'></div>
+      </button>
+    </div>
+    <ul class='menu' role='menubar'>
+      <% const pages = ['About Us', 'RSVP', 'Photos', 'Details']; %> <%
+      pages.forEach(page => { %>
+      <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>" role='menuitem'
+        ><%= page %></a
+      >
       <% }); %>
-    </nav>
-  </header>
-
+    </ul>
+  </nav>
+  <nav class='mobile-menu' role='menu' aria-hidden='true'>
+    <% pages.forEach(page => { %>
+    <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>" role='menuitem'
+      ><%= page %></a
+    >
+    <% }); %>
+  </nav>
+</header>
