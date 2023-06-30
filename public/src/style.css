@@ -1,17 +1,25 @@
 /*====================
-        GLOBAL
+        GLOBALS
 ======================*/
-
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: hsl(50, 100%, 50%);
-}
 
 @font-face {
   font-family: 'Dancing';
   src: url('./fonts/DancingScript-Bold.ttf') format('truetype');
   font-weight: 700;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: hsl(50, 100%, 50%);
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 /*=========================
@@ -22,6 +30,46 @@ html, body {
 
 .mobile-menu-toggle {
   display: block;
+  z-index: 5;
+}
+
+.hamburger {
+  display: block;
+  position: relative;
+  width: 45px;
+  height: 35px;
+  margin-top: 10px;
+  cursor: pointer;
+  appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+  left: 85%;
+}
+
+.hamburger .bar, .hamburger::after, .hamburger::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 5px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 6px 0px;
+  transition: 0.4s;
+}
+
+.hamburger.is-active::before {
+  /* transform: rotate(-45deg) translate(-8px, 7px); */
+  transform: translateY(11px);
+}
+
+.hamburger.is-active .bar {
+  opacity: 0;
+}
+
+.hamburger.is-active::after {
+  /* transform: rotate(45deg) translate(-8px, -8px); */
+  transform: translateY(-11px);
 }
 
 .menu {
@@ -38,9 +86,45 @@ html, body {
   text-align: center;
 }
 
+.mobile-menu {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 3;
+  background-color: #12002f;
+  padding-top: 120px;
+  transition: 0.4s;
+}
+
+.mobile-menu.is-active {
+  left: 0;
+}
+
+.mobile-menu a {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto 16px;
+  text-align: center;
+  padding: 12px 16px;
+  background-color: #1f103f;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 700ms;
+}
+
+.mobile-menu a:hover {
+  background-color: #24104f;
+  transform: translateY(-2px);
+  transition: transform 250ms;
+}
+
 /* Desktop Navigation */
 
-@media (min-width: 1000px) {
+@media (min-width: 819px) {
   .mobile-menu-toggle {
     display: none; /* Hide the hamburger icon in desktop view */
   }
@@ -64,38 +148,9 @@ html, body {
   }
 }
 
-/* Hamburger icon styles */
-
-#hamburger-icon {
-  display: inline-block;
-  width: 30px; /* Adjust the width and height as needed */
-  height: 30px;
-  animation: hamburgerAnimation 1s infinite paused; /* Add the animation property */
-}
-
-@keyframes hamburgerAnimation {
-  from {
-    background-position: 0 0; /* Starting position of the animation */
-  }
-  to {
-    background-position: -900px 0; /* Ending position of the animation */
-  }
-}
-
-/* Add the paused class to pause the animation */
-#hamburger-icon.paused {
-  animation-play-state: paused;
-}
-
-.mobile-menu-toggle label {
-  cursor: pointer;
-  display: inline-block;
-  padding: 10px;
-}
-
-/*=========================
+/*================
       FOOTER
-=========================*/
+=================*/
 
 .page-wrapper {
   width: 100%;
@@ -126,62 +181,13 @@ footer a {
   color: inherit;
 }
 
-/*====================
-        MAIN PAGE
-======================*/
+/*================
+    HOME PAGE
+=================*/
 
-/* .main-page {
-  background: #000 url('./images/Doug\ and\ heather-92.JPG');
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.header {
+main div {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.navbar, .location {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.location {
   flex-direction: column;
 }
-
-.title{
-  font-family: 'Dancing', serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 5rem;
-  color: rgba(216, 207, 196, 0.662);
-}
-
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
-/*====================
-        RSVP PAGE
-======================*/
-
-/* .rsvp-page {
-  background: #000 url('./images/Doug\ and\ heather-90.JPG');
-  background-position-y: -5rem;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-#rsvpForm {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
-

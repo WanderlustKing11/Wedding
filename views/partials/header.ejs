@@ -11,12 +11,9 @@
   <header>
     <nav>
       <div class='mobile-menu-toggle'>
-        <input type='checkbox' id='menu-toggle'>
-        <label for='menu-toggle'>
-          <span id='hamburger-icon'>
-            <img src='../../public/src/images/hamburger-48.png' alt='Hamburger Icon'>
-          </span>
-        </label>
+        <button class='hamburger'>
+          <div class='bar'></div>
+        </button>
       </div>
       <ul class='menu'>  
         <% const pages = ['About Us', 'RSVP', 'Photos', 'Details']; %>
@@ -24,6 +21,11 @@
           <li><a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>"><%= page %></a></li>
         <% }); %>
       </ul>
+    </nav>
+    <nav class='mobile-menu'>
+      <% pages.forEach(page => { %>
+        <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>"><%= page %></a>
+      <% }); %>
     </nav>
   </header>
 
