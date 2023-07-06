@@ -32,14 +32,23 @@ const authenticate = async () => {
 const responseYes = "Attending";
 const responseNo = "Not attending";
 
-app.get('/', async (req, res) => {
+app.get('/home', async (req, res) => {
   res.render('home');
+});
+
+app.get('/about-us', async (req, res) => {
+  res.render('aboutus');
+});
+
+app.get('/photos', async (req, res) => {
+  res.render('photos');
 });
 
 
 app.get('/rsvp', (req, res) => {
-  const rsvpPath = path.join(__dirname, 'rsvp.html');
-  res.sendFile(rsvpPath)
+  // const rsvpPath = path.join(__dirname, 'rsvp.html');
+  // res.sendFile(rsvpPath)
+  res.render('rsvp');
 });
 
 // RSVP endpoint

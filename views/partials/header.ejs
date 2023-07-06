@@ -11,7 +11,7 @@
       </button>
     </div>
     <ul class='menu' role='menubar'>
-      <% const pages = ['About Us', 'RSVP', 'Photos', 'Details']; %> <%
+      <% const pages = ['Home', 'About Us', 'RSVP', 'Photos', 'Details']; %> <%
       pages.forEach(page => { %>
       <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>" role='menuitem'
         ><%= page %></a
@@ -26,4 +26,5 @@
     >
     <% }); %>
   </nav>
+  <h1 class='title'>Heather & Doug</h1>
 </header>

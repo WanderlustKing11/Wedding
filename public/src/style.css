@@ -303,7 +303,7 @@ h2.catchphrase::before {
 
 .detes h2:first-child {
   font-family: 'MarckScript';
-  text-shadow: 2px 2px 4px #888888;
+  text-shadow: 2px 2px 10px #888888;
 }
 
 .detes > * {
@@ -375,4 +375,116 @@ h2.catchphrase::before {
   .stars {
     display: none;
   }
+}
+
+/*================
+    ABOUT US
+=================*/
+
+.aboutus-wrapper {
+  color: #000;
+  font-family: 'Dancing';
+  padding: 1.1rem;
+}
+
+.aboutus-catchphrase {
+  width: 55%;
+  border-right: 2px solid #000;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: cursor .7s step-end infinite alternate;
+}
+
+@keyframes cursor {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.aboutus-wrapper p {
+  width: 90%;
+  font-family: 'Bacasime_Antique';
+  font-size: 1.1rem;
+  padding-left: 5px;
+}
+
+.aboutus-img-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  border: 3px solid #000;
+  margin-bottom: 1rem;
+}
+
+.aboutus-img {
+  margin: 10px;
+  width: 90%;
+  box-shadow: 3px 3px 6px #888888;
+}
+
+@media (min-width: 819px) {
+  .aboutus-page {
+    background-image: url(./images/DH02_comp.jpg);
+    background-size: cover;
+    color: hsl(58, 88%, 94%);
+  }
+
+  .aboutus-page .title {
+    display: none;
+  }
+
+  .aboutus-wrapper {
+    width: 50%;
+    color: hsl(58, 88%, 94%);
+    margin-left: 11.5rem;
+  }
+
+  .aboutus-catchphrase {
+    font-size: 2.5rem;
+  } 
+
+  .aboutus-wrapper p {
+    margin-top: 2rem;
+  }
+
+  .aboutus-img-wrapper {
+    display: none;
+  }
+}
+
+/*===========
+    RSVP
+=============*/
+
+.rsvp-page {
+  color: #000;
+}
+
+/*===========
+    PHOTOS
+=============*/
+
+.photos-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #000;
+}
+
+@media (min-width: 819px) {
+  h1.title {
+    display: none;
+ }
+
+  .photos-page {
+    color: #000;
+  }
+
+  .photos-title h2 {
+    font-size: 3.5rem;
+  }
+
+
 }
