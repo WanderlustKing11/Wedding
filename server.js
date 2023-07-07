@@ -13,20 +13,20 @@ app.use(express.urlencoded({ extended: true })); // enables us to use forms
 app.use('/public/src', express.static(__dirname + '/public/src'));
 
 // Instance of Google Sheets API
-const googleSheets = google.sheets({ version: 'v4' });
-const spreadsheetId = process.env.SSID;
+// const googleSheets = google.sheets({ version: 'v4' });
+// const spreadsheetId = process.env.SSID;
 
-// Google Auth //
-const authenticate = async () => {
-  const auth = new google.auth.GoogleAuth({
-    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
+// // Google Auth //
+// const authenticate = async () => {
+//   const auth = new google.auth.GoogleAuth({
+//     keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+//     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+//   });
 
-    // Create client instance for auth
-    const client = await auth.getClient();
-    return client;
-};
+//     // Create client instance for auth
+//     const client = await auth.getClient();
+//     return client;
+// };
 
 
 const responseYes = "Attending";
@@ -46,14 +46,21 @@ app.get('/photos', async (req, res) => {
 
 app.get('/rsvp', async (req, res) => {
 
-  const client = await authenticate();
-  const metaData = await googleSheets.spreadsheets.get({
-    auth: client,
-    spreadsheetId,
-    range: 'wedding-guests',
+  const auth = new google.auth.GoogleAuth({
+    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
-  res.send(getRows.data);
 
+    // Create client instance for auth
+    const client = await auth.getClient();
+
+    const googleSheets = google.sheets({ version: 'v4' });
+    const spreadsheetId = process.env.SSID;
+    const metaData = await googleSheets.spreadsheets.get({
+      auth,
+      spreadsheetId,
+    });
+    res.send(metaData.data);
 });
 
 // app.get('/rsvp', (req, res) => {
