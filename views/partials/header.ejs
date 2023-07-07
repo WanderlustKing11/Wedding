@@ -11,19 +11,23 @@
       </button>
     </div>
     <ul class='menu' role='menubar'>
-      <% const pages = ['Home', 'About Us', 'RSVP', 'Photos', 'Details']; %> <%
-      pages.forEach(page => { %>
-      <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>" role='menuitem'
-        ><%= page %></a
-      >
+      <% const pages = ['Home', 'About Us', 'RSVP', 'Photos', 'Details']; %> 
+      <% pages.forEach(page => { %>
+        <% if (page === 'Home') { %>
+          <a href='/' role='menuitem'><%= page %></a>
+        <% } else { %>
+          <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>" role='menuitem'><%= page %></a>
+        <% } %>
       <% }); %>
     </ul>
   </nav>
   <nav class='mobile-menu' role='menu' aria-hidden='true'>
     <% pages.forEach(page => { %>
-    <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>" role='menuitem'
-      ><%= page %></a
-    >
+      <% if (page === 'Home') { %>
+        <a href='/' role='menuitem'><%= page %></a>
+      <% } else { %>
+        <a href="/<%= page.toLowerCase().replace(/\s+/g, '-') %>" role='menuitem'><%= page %></a>
+      <% } %>
     <% }); %>
   </nav>
   <h1 class='title'>Heather & Doug</h1>

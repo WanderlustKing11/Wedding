@@ -32,7 +32,7 @@ const authenticate = async () => {
 const responseYes = "Attending";
 const responseNo = "Not attending";
 
-app.get('/home', async (req, res) => {
+app.get('/', async (req, res) => {
   res.render('home');
 });
 
@@ -44,15 +44,64 @@ app.get('/photos', async (req, res) => {
   res.render('photos');
 });
 
+app.get('/rsvp', async (req, res) => {
 
-app.get('/rsvp', (req, res) => {
-  // const rsvpPath = path.join(__dirname, 'rsvp.html');
-  // res.sendFile(rsvpPath)
-  res.render('rsvp');
+  const client = await authenticate();
+  const metaData = await googleSheets.spreadsheets.get({
+    auth: client,
+    spreadsheetId,
+    range: 'wedding-guests',
+  });
+  res.send(getRows.data);
+
 });
 
-// RSVP endpoint
-app.post('/rsvp', express.json(), async (req, res) => {
+// app.get('/rsvp', (req, res) => {
+//   // const rsvpPath = path.join(__dirname, 'rsvp.html');
+//   // res.sendFile(rsvpPath)
+//   res.render('rsvp', {
+//     message: null,
+//   });
+// });
+
+// app.post('/rsvp', async (req, res) => {
+//   try {
+//     // Authenticate and get the client
+//     const client = await authenticate();
+
+//     // Read row(s) from spreadsheet
+//     const getRows = await googleSheets.spreadsheets.values.get({
+//       auth: client,
+//       spreadsheetId,
+//       range: 'driver-list!A2:A',
+//     });
+
+//     const typedName = req.body.guest_input_last_name;
+//     let invitedGuestsLastNames = getRows.data.values.flat();
+
+//     if (invitedGuestsLastNames.includes(typedName)) {
+//       res.redirect('/guestinfo?guest=' + typedName);
+//     } else {
+//       res.render('rsvp', {
+//         guest: null,
+//         message: 'Sorry, no match found!',
+//       });
+//     }
+//   } catch (error) {
+//     // Handle any errors that occur during authentication or API requests
+//     console.error('Error:', error);
+//     res.status(500).send('An error occured.');
+//   }
+// });
+
+app.get('/guestInfo', (req, res) => {
+  res.render('guestInfo', {
+    guest: null,
+    message: null,
+  });
+});
+
+app.post('/guestInfo', express.json(), async (req, res) => {
   const { lastName, rsvpStatus } = req.body;
 
   try {

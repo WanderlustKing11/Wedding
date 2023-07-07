@@ -1,11 +1,26 @@
 <%- include('partials/meta'); %>
-<body class='rsvp-page'>
-<%- include('partials/header'); %>
+<body class="rsvp-page">
+  <%- include('partials/header'); %>
 
-<div class='rsvp-wrapper'>
-<div>RSVP Page</div>
-<div>Input Last Name</div>
-<button type='submit'>Search</button>
-</div>
+  <div class="container">
+    <div class="rsvp-wrapper">
+      <form id="guest_input_last_name" action="/rsvp" method="POST">
+        <label for="guest_input_last_name">Type last name below</label>
+        <input
+          type="text"
+          name="guest_input_last_name"
+          class="rsvp-input"
+          placeholder="Last Name"
+        />
+        <button class="last-name-btn" name="nameCheck" type="submit">
+          Search
+        </button>
+      </form>
+      <% if (message) { %>
+      <p class="rsvp-error"><%= message %></p>
+      <% } %>
+    </div>
+  </div>
 
-<%- include('partials/footer'); %>
+  <%- include('partials/footer'); %>
+</body>

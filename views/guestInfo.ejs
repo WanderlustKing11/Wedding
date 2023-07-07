@@ -1,9 +1,22 @@
-<%- include('partials/header'); %>
+<%- include('partials/meta'); %>
+<body class='guestInfo-page'>
+  <%- include('partials/header'); %>
 
-<div>Guest Info Page</div>
-<div>Radio Input Here: Select who you are.</div>
-<div>Select Response: yes or no</div>
-<div>Select possible food alergies.</div>
-<button type='submit'>Confirm RSVP</button>
+  <div class='container'>
+    <div class='guestInfo-wrapper'>
+      <form id='guestInfo-form' action='/submit' method='POST'>
+        <input type='hidden' name='guest' value='<%= guest %>'>
+          <label for='response'>Hey! Let us know if you'll be able to make it:</label>
+          <select name='guestStatus' id='guestStatus'>
+            <option value='choose' selected disabled>Choose</option>
+            <option value='yes'>Yes, see you there!</option>
+            <option value='no'>Sorry! Wish I could be there</option>
+          </select>
+          <!-- select list of food alergies -->
+          <button class='guestInfo-submit-btn' name='submit' type='submit'>Confirm</button>        
+      </form>
+    </div>
+  </div>
 
-<%- include('partials/footer'); %>
+  <%- include('partials/footer'); %>
+</body>
