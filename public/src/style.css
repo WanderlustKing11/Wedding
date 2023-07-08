@@ -569,6 +569,65 @@ h2.catchphrase::before {
   }
 }
 
+/*===============
+    GUEST INFO
+=================*/
+
+.guestInfo-page {
+  background-image: url('./images/DH05_comp.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-position-x: -13rem; */
+  /* background-origin: border-box; */
+}
+
+.guestInfo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: hsl(50, 100%, 94%);
+}
+
+#guestInfo-form {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  margin: 7rem 1rem;
+  font-size: 1.5rem;
+  max-width: 80%;
+}
+
+#guestInfo-form > * {
+  margin-bottom: 1.5rem;
+}
+
+/* select#getStatus {
+  font-size: 1.9rem;
+} */
+
+.guestInfo-submit-btn {
+  color: hsl(58, 88%, 94%);
+  background-color: transparent;
+  border: 2px solid hsl(50, 100%, 94%);
+  border-radius: 5px;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  transition-duration: 0.4s;
+}
+
+.guestInfo-submit-btn:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+.guestInfo-submit-btn:active {
+  color: #fff;
+  background-color: #000;
+  transform: translateY(2px);
+  transition-duration: 0.1s;
+}
+
 /*===========
     PHOTOS
 =============*/

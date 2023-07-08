@@ -2,13 +2,13 @@
 <body class='guestInfo-page'>
   <%- include('partials/header'); %>
 
-  <div class='container'>
+  <div class='guestInfo-container'>
     <div class='guestInfo-wrapper'>
       <form id='guestInfo-form' action='/submit' method='POST'>
         <input type='hidden' name='guest' value='<%= guest %>'>
           <label for='response'>Hey! Let us know if you'll be able to make it:</label>
-          <select name='guestStatus' id='guestStatus'>
-            <option value='choose' selected disabled>Choose</option>
+          <select name='guestStatus' id='guestStatus' required>
+            <option value='choose' selected disabled>Select here</option>
             <option value='yes'>Yes, see you there!</option>
             <option value='no'>Sorry! Wish I could be there</option>
           </select>

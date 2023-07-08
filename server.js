@@ -13,21 +13,20 @@ app.use(express.urlencoded({ extended: true })); // enables us to use forms
 app.use('/public/src', express.static(__dirname + '/public/src'));
 
 // Instance of Google Sheets API
-// const googleSheets = google.sheets({ version: 'v4' });
-// const spreadsheetId = process.env.SSID;
+const googleSheets = google.sheets({ version: 'v4' });
+const spreadsheetId = process.env.SSID;
 
-// // Google Auth //
-// const authenticate = async () => {
-//   const auth = new google.auth.GoogleAuth({
-//     keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-//     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-//   });
+// Google Auth //
+const authenticate = async () => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
 
-//     // Create client instance for auth
-//     const client = await auth.getClient();
-//     return client;
-// };
-
+    // Create client instance for auth
+    const client = await auth.getClient();
+    return client;
+};
 
 const responseYes = "Attending";
 const responseNo = "Not attending";
@@ -45,99 +44,115 @@ app.get('/photos', async (req, res) => {
 });
 
 app.get('/rsvp', async (req, res) => {
-
-  const auth = new google.auth.GoogleAuth({
-    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
-
-    // Create client instance for auth
-    const client = await auth.getClient();
-
-    const googleSheets = google.sheets({ version: 'v4' });
-    const spreadsheetId = process.env.SSID;
-    const metaData = await googleSheets.spreadsheets.get({
-      auth,
-      spreadsheetId,
-    });
-    res.send(metaData.data);
-});
-
-// app.get('/rsvp', (req, res) => {
-//   // const rsvpPath = path.join(__dirname, 'rsvp.html');
-//   // res.sendFile(rsvpPath)
-//   res.render('rsvp', {
-//     message: null,
-//   });
-// });
-
-// app.post('/rsvp', async (req, res) => {
-//   try {
-//     // Authenticate and get the client
-//     const client = await authenticate();
-
-//     // Read row(s) from spreadsheet
-//     const getRows = await googleSheets.spreadsheets.values.get({
-//       auth: client,
-//       spreadsheetId,
-//       range: 'driver-list!A2:A',
-//     });
-
-//     const typedName = req.body.guest_input_last_name;
-//     let invitedGuestsLastNames = getRows.data.values.flat();
-
-//     if (invitedGuestsLastNames.includes(typedName)) {
-//       res.redirect('/guestinfo?guest=' + typedName);
-//     } else {
-//       res.render('rsvp', {
-//         guest: null,
-//         message: 'Sorry, no match found!',
-//       });
-//     }
-//   } catch (error) {
-//     // Handle any errors that occur during authentication or API requests
-//     console.error('Error:', error);
-//     res.status(500).send('An error occured.');
-//   }
-// });
-
-app.get('/guestInfo', (req, res) => {
-  res.render('guestInfo', {
+  res.render('rsvp', {
     guest: null,
     message: null,
   });
 });
 
-app.post('/guestInfo', express.json(), async (req, res) => {
-  const { lastName, rsvpStatus } = req.body;
-
+app.post('/rsvp', async (req, res) => {
   try {
-    // Fetch guest data based on last name
-    const guestData = await fetchGuestData(lastName);
+    // Authenticate and get the client
+    const client = await authenticate();
 
-    if (guestData) {
-      const { firstName, address } = guestData;
+    // Read row(s) from spreadsheet
+    const getRows = await googleSheets.spreadsheets.values.get({
+      auth: client,
+      spreadsheetId,
+      range: 'wedding-guests!A2:A',
+    });
 
-      // Update Google Sheets with the RSVP status
-      const spreadsheetId = process.env.SSID;
-      const range = 'Wedding Guests!E2'; // "RSVP status" is in column E, starting from row 2
-      const resource = {
-        values: [[rsvpStatus]], // Update the RSVP status
-      };
+    const typedName = req.body.guest_input_last_name;
+    let sheetNames = getRows.data.values.flat();
 
-      await sheets.spreadsheets.values.update({
-        spreadsheetId,
-        range,
-        valueInputOption: 'USER_ENTERED',
-        resource,
-      });
-
-      // Return a success response
-      res.status(200).json({ success: true, message: 'RSVP submitted successfully' });
+    if (sheetNames.includes(typedName)) {
+      res.redirect('/guestinfo?guest=' + typedName);
     } else {
-      // Guest not found
-      res.status(404).json({ success: false, message: 'Guest not found' });
+      res.render('rsvp', {
+        guest: null,
+        message: 'Sorry, no match found! Maybe check the spelling?',
+      });
     }
+  } catch (error) {
+    // Handle any errors that occur during authentication or API requests
+    console.error('Error:', error);
+    res.status(500).send('An error occured.');
+  }
+});
+
+// app.post('/rsvp', async (req, res) => {
+
+//   const auth = new google.auth.GoogleAuth({
+//     keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+//     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+//   });
+
+//     // Create client instance for auth
+//     const client = await auth.getClient();
+
+//     const googleSheets = google.sheets({ version: 'v4' });
+//     const spreadsheetId = process.env.SSID;
+//     const metaData = await googleSheets.spreadsheets.get({
+//       auth,
+//       spreadsheetId,
+//     });
+
+//     const getRows = await googleSheets.spreadsheets.values.get({
+//       auth,
+//       spreadsheetId,
+//       range: 'wedding-guests',
+//     });
+
+//     res.send(getRows.data);
+// });
+
+app.get('/guestinfo', (req, res) => {
+  const guest = req.query.guest
+  if (!guest) {
+    res.redirect('/rsvp');
+  } else {
+    res.render('guestInfo', {
+      guest: guest,
+      message: null,
+    });
+  }
+});
+
+app.post('/submit', express.json(), async (req, res) => {
+  try {
+    const selectedGuest = req.body.guest;
+    const rsvpStatus = req.body.guestStatus;
+
+  // Authenticate and get the client
+  const client = await authenticate();  
+
+  // Read row(s) from spreadsheet
+  const getRows = await googleSheets.spreadsheets.values.get({
+    auth: client,
+    spreadsheetId,
+    range: 'wedding-guests!A2:A',
+  });
+
+  const sheetNames = getRows.data.values.flat();
+
+  // Write row(s) to spreadsheet
+  await googleSheets.spreadsheets.values.update({
+    auth: client,
+    spreadsheetId,
+    range: `wedding-guests!M${sheetNames.indexOf(selectedGuest) + 2}`,
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      values: [[rsvpStatus === 'yes' ? responseYes : responseNo]],
+    },
+  });
+
+  console.log('Guest:', selectedGuest);
+  console.log('RSVP Status:', rsvpStatus);
+
+  res.render('success', {
+    guest: selectedGuest,
+    message: 'Your RSVP has been sent!',
+  });
   } catch (error) {
     console.error('Error processing RSVP:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
