@@ -6,14 +6,16 @@
     <div class='guestInfo-wrapper'>
       <form id='guestInfo-form' action='/submit' method='POST'>
         <input type='hidden' name='guest' value='<%= guest %>'>
-          <label for='response'>Hey! Let us know if you'll be able to make it:</label>
+        <label for='response'>Hey! Let us know if you'll be able to make it:</label>
+        <div class='guestInfo-select'>
           <select name='guestStatus' id='guestStatus' required>
             <option value='choose' selected disabled>Select here</option>
             <option value='yes'>Yes, see you there!</option>
-            <option value='no'>Sorry! Wish I could be there</option>
+            <option value='no'>No, sorry! Wish I could be there</option>
           </select>
-          <!-- select list of food alergies -->
-          <button class='guestInfo-submit-btn' name='submit' type='submit'>Confirm</button>        
+        </div>
+        <!-- select list of food alergies -->
+        <button class='guestInfo-submit-btn' name='submit' type='submit'>Confirm</button>
       </form>
     </div>
   </div>

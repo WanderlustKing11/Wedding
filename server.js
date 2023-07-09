@@ -71,6 +71,7 @@ app.post('/rsvp', async (req, res) => {
       res.render('rsvp', {
         guest: null,
         message: 'Sorry, no match found! Maybe check the spelling?',
+        error: true,
       });
     }
   } catch (error) {
@@ -159,6 +160,9 @@ app.post('/submit', express.json(), async (req, res) => {
   }
 });
 
+app.get('/details', async (req, res) => {
+  res.render('details');
+});
 
 
 // Start the server

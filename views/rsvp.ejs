@@ -9,7 +9,7 @@
         <input
           type="text"
           name="guest_input_last_name"
-          class="rsvp-input"
+          class="rsvp-input <%= typeof error !== 'undefined' && error ? 'error' : '' %>"
           placeholder="Last Name"
         />
         <button class="last-name-btn" name="nameCheck" type="submit">
@@ -23,4 +23,4 @@
   </div>
 
   <%- include('partials/footer'); %>
-</body>
+

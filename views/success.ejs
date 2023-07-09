@@ -1,7 +1,18 @@
-<%- include('partials/header'); %>
+<%- include('partials/meta'); %>
+<body class="success-page">
+  <%- include('partials/header'); %>
 
-<div>Confirmation Page</div>
-<div>Thanks for your reponse!</div>
-<div>Click <a href='/details'>here</a> for important info and questions you might have.</div>
+
+<div class='container'>
+  <div class='success-wrapper'>
+    <h2>Thanks for your response.</h2>
+    <h2>You're all set!</h2>
+    <h2 class='success-details'>Go to our <a href='/details'>Details</a> page for any questions you might have.</h2>
+    <a href='/details'><button>DETAILS PAGE</button></a>
+  </div>
+</div>
+<div class='embroidery-patern'>
+  <img src='../public/src/images/patern_img01_comp.png' alt='flower embroidery design'>
+</div>
 
 <%- include('partials/footer'); %>
