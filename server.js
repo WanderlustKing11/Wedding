@@ -59,7 +59,7 @@ app.post('/rsvp', async (req, res) => {
     const getRows = await googleSheets.spreadsheets.values.get({
       auth: client,
       spreadsheetId,
-      range: 'wedding-guests!A2:A',
+      range: 'Sheet7!A2:A',
     });
 
     const typedName = req.body.guest_input_last_name;
@@ -101,7 +101,7 @@ app.post('/rsvp', async (req, res) => {
 //     const getRows = await googleSheets.spreadsheets.values.get({
 //       auth,
 //       spreadsheetId,
-//       range: 'wedding-guests',
+//       range: 'Sheet7',
 //     });
 
 //     res.send(getRows.data);
@@ -131,16 +131,18 @@ app.post('/submit', express.json(), async (req, res) => {
   const getRows = await googleSheets.spreadsheets.values.get({
     auth: client,
     spreadsheetId,
-    range: 'wedding-guests!A2:A',
+    range: 'Sheet7!A2:A',
   });
 
   const sheetNames = getRows.data.values.flat();
+  const selectedRowIndex = sheetNames.indexOf(selectedGuest);
+  const adjustedRowIndex = selectedRowIndex + 2;
 
   // Write row(s) to spreadsheet
   await googleSheets.spreadsheets.values.update({
     auth: client,
     spreadsheetId,
-    range: `wedding-guests!M${sheetNames.indexOf(selectedGuest) + 2}`,
+    range: `Sheet7!C${adjustedRowIndex}`,
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: [[rsvpStatus === 'yes' ? responseYes : responseNo]],
