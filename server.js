@@ -107,22 +107,42 @@ app.post('/rsvp', async (req, res) => {
 //     res.send(getRows.data);
 // });
 
-app.get('/guestinfo', (req, res) => {
-  const guest = req.query.guest
-  if (!guest) {
-    res.redirect('/rsvp');
-  } else {
+app.get('/guestinfo', async (req, res) => {
+  try {
+    const selectedLastName = req.query.guest;
+
+    // Authenticate and get the client
+    const client = await authenticate();
+
+    // Read row(s) from spreadsheet
+    const getRows = await googleSheets.spreadsheets.values.get({
+      auth: client,
+      spreadsheetId,
+      range: 'Sheet7!A2:B',
+    });
+
+    const data = getRows.data.values;
+    const firstNames = data
+      .filter(row => row[0] === selectedLastName)
+      .map(row => row[1]);
+
     res.render('guestInfo', {
-      guest: guest,
+      guest: selectedLastName,
+      firstNames: firstNames,
       message: null,
     });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('An error occurred.');
   }
 });
 
 app.post('/submit', express.json(), async (req, res) => {
   try {
     const selectedGuest = req.body.guest;
+    const selectedFirstName = req.body.firstName;
     const rsvpStatus = req.body.guestStatus;
+    const dietaryRestriction = req.body.guestDiet;
 
   // Authenticate and get the client
   const client = await authenticate();  
@@ -131,11 +151,20 @@ app.post('/submit', express.json(), async (req, res) => {
   const getRows = await googleSheets.spreadsheets.values.get({
     auth: client,
     spreadsheetId,
-    range: 'Sheet7!A2:A',
+    range: 'Sheet7!A2:D',
   });
 
-  const sheetNames = getRows.data.values.flat();
-  const selectedRowIndex = sheetNames.indexOf(selectedGuest);
+  const data = getRows.data.values;
+  const selectedRow = data.find(row => row[0] === selectedGuest && row[1] === selectedFirstName);
+
+  if (!selectedRow) {
+    res.render('error', {
+      message: 'Sorry, the selected guest and first name combination is not found.',
+    });
+    return;
+  }
+
+  const selectedRowIndex = data.indexOf(selectedRow);
   const adjustedRowIndex = selectedRowIndex + 2;
 
   // Write row(s) to spreadsheet
@@ -149,8 +178,20 @@ app.post('/submit', express.json(), async (req, res) => {
     },
   });
 
+  await googleSheets.spreadsheets.values.update({
+    auth: client,
+    spreadsheetId,
+    range: `Sheet7!D${adjustedRowIndex}`,
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      values: [[dietaryRestriction]],
+    },
+  });
+
   console.log('Guest:', selectedGuest);
+  console.log('First Name:', selectedFirstName);
   console.log('RSVP Status:', rsvpStatus);
+  console.log('Dietary Restriction:', dietaryRestriction);
 
   res.render('success', {
     guest: selectedGuest,

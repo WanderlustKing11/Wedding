@@ -1,10 +1,10 @@
 <%- include('partials/meta'); %>
-<body class='guestInfo-page'>
+<body class='guestDiet-page'>
   <%- include('partials/header'); %>
 
-  <div class='guestInfo-container'>
-    <div class='guestInfo-wrapper'>
-      <form id='guestInfo-form' action='/submit' method='POST'>
+  <div class='guestDiet-container'>
+    <div class='guestDiet-wrapper'>
+      <form id='guestDiet-form' action='/guestDiet' method='POST'>
         <input type='hidden' name='guest' value='<%= guest %>'>
         <label class='firstName-label' for='firstName'>Select which one you are:</label>
         <% for (let i = 0; i < firstNames.length; i++) { %>
@@ -15,27 +15,17 @@
         <% } %>
         <label class='response-label' for='response'>Let us know if you'll be able to make it:</label>
         <div class='guestInfo-select'>
-          <select name='guestStatus' id='guestStatus'>
+          <select name='guestStatus' id='guestStatus' required>
             <option value='choose' selected disabled>Select here</option>
             <option value='yes'>Yes, see you there!</option>
             <option value='no'>No, sorry! Wish I could be there</option>
           </select>
         </div>
-        <div class='dietary-wrapper'>
-          <h3>Dietary Restrictions</h3>
-          <label class='guestDiet-label' for='guestDiet'>We're planning on having a little bit of something for everyone, even if you're a picky eater. But just in case, let us know if you have any dietary restrictions you'd like us to know about:</label>
-          <select name='guestDiet' id='guestDiet' required>
-            <option value='none'>None</option>
-            <option value='vegan/vegetarian'>vegan/vegetarian</option>
-            <option value='gluten free'>gluten free</option>
-            <option value='nut allergy'>nut allergy</option>
-          </select>
-        </div>
+        <!-- select list of food alergies -->
         <button class='guestInfo-submit-btn' name='submit' type='submit'>Confirm</button>
       </form>
     </div>
   </div>
-  
 
   <%- include('partials/footer'); %>
 </body>
