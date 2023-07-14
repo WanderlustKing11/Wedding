@@ -81,32 +81,6 @@ app.post('/rsvp', async (req, res) => {
   }
 });
 
-// app.post('/rsvp', async (req, res) => {
-
-//   const auth = new google.auth.GoogleAuth({
-//     keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-//     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-//   });
-
-//     // Create client instance for auth
-//     const client = await auth.getClient();
-
-//     const googleSheets = google.sheets({ version: 'v4' });
-//     const spreadsheetId = process.env.SSID;
-//     const metaData = await googleSheets.spreadsheets.get({
-//       auth,
-//       spreadsheetId,
-//     });
-
-//     const getRows = await googleSheets.spreadsheets.values.get({
-//       auth,
-//       spreadsheetId,
-//       range: 'Sheet7',
-//     });
-
-//     res.send(getRows.data);
-// });
-
 app.get('/guestinfo', async (req, res) => {
   try {
     const selectedLastName = req.query.guest;
