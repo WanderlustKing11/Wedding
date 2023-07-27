@@ -5,6 +5,8 @@ const ejs = require('ejs');
 const { google } = require('googleapis');
 const { log } = require('console');
 require('dotenv').config();
+const Cryptr = require('cryptr');
+const fs = require('fs');
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -16,10 +18,19 @@ app.use('/public/src', express.static(__dirname + '/public/src'));
 const googleSheets = google.sheets({ version: 'v4' });
 const spreadsheetId = process.env.SSID;
 
+// Read and decrypt credentials
+const readAndDecryptCredentials = () => {
+  const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
+  const encryptedData = fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS, 'utf8');
+  const decryptedData = cryptr.decrypt(encryptedData);
+  return JSON.parse(decryptedData);
+}
+
 // Google Auth //
 const authenticate = async () => {
+  const decryptedCredentials = readAndDecryptCredentials();
   const auth = new google.auth.GoogleAuth({
-    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    keyFile: decryptedCredentials,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 
