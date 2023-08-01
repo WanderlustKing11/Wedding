@@ -18,19 +18,25 @@ app.use('/public/src', express.static(__dirname + '/public/src'));
 const googleSheets = google.sheets({ version: 'v4' });
 const spreadsheetId = process.env.SSID;
 
-// Read and decrypt credentials
 const readAndDecryptCredentials = () => {
-  const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
-  const encryptedData = fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS, 'utf8');
-  const decryptedData = cryptr.decrypt(encryptedData);
-  return JSON.parse(decryptedData);
+  try {
+    const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
+    const encryptedData = fs.readFileSync('./encrypted_credentials.txt', 'utf-8');
+    console.log('Encrypted data:', encryptedData);
+    const decryptedData = cryptr.decrypt(encryptedData);
+    console.log('Decrypted data:', decryptedData);
+    return JSON.parse(decryptedData);
+  } catch (error) {
+    console.error('Error reading or decrypting credentials:', error);
+    return null;
+  }
 }
 
 // Google Auth //
 const authenticate = async () => {
   const decryptedCredentials = readAndDecryptCredentials();
   const auth = new google.auth.GoogleAuth({
-    keyFile: decryptedCredentials,
+    credentials: decryptedCredentials,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 
