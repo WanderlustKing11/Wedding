@@ -463,6 +463,7 @@ h2.catchphrase::before {
 
   .aboutus-wrapper p {
     margin-top: 2rem;
+    font-size: 1.4rem;
   }
 
   .aboutus-img-wrapper {
@@ -589,6 +590,7 @@ p.rsvp-error {
 
 .guestInfo-page {
   background-image: url('./images/DH05_comp.jpg');
+  background-color: #000;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -708,10 +710,7 @@ select option {
 }
 
 .guestInfo-page footer {
-  display: flex;
-  position: absolute;
-  margin-top: auto;
-  bottom: 0;
+  position: relative;
 }
 
 @media (min-width: 819px) {

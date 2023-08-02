@@ -23,7 +23,7 @@ const readAndDecryptCredentials = () => {
     const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
     // const encryptedData = fs.readFileSync('./encrypted_credentials.txt', 'utf-8');
     const encryptedData = process.env.ENCRYPTED_CREDENTIALS;
-    console.log('Encrypted data:', encryptedData);
+    // console.log('Encrypted data:', encryptedData);
     const decryptedData = cryptr.decrypt(encryptedData);
     // console.log('Decrypted data:', decryptedData);
     return JSON.parse(decryptedData);
