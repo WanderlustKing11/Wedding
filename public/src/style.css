@@ -874,10 +874,6 @@ select option {
     DETAILS
 =============*/
 
-.details-container {
-  display: flex;
-}
-
 .details-page {
   background-image: url('./images/DH11_comp.jpg');
   background-size: cover;
@@ -891,12 +887,50 @@ select option {
   width: 100%;
 }
 
+.details-container {
+  display: flex;
+  
+}
+
 .details-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
   margin: 6rem 1rem 6rem 1rem;
   padding: 1rem;
   color: hsl(50, 100%, 94%);
   background-color: hsla(0, 0%, 0%, 0.5);
   border-radius: 5px;
+}
+
+.details-qa {
+  display: flex;
+  flex-direction: column;
+  margin: auto 0.7rem;
+  font-size: 0.9rem;
+}
+
+.details-qa h2 {
+  font-family: 'Nunito';
+  font-weight: 400;
+}
+
+.details-qa a {
+  color: hsl(181, 100%, 82%);
+}
+
+.details-title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.details-title h2 {
+  font-family: 'Dancing';
+  font-weight: 700;
+  font-size: 1.9rem;
 }
 
 .details-page footer {

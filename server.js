@@ -3,7 +3,7 @@ const https = require('https');
 const path = require('path');
 const ejs = require('ejs');
 const { google } = require('googleapis');
-const { log } = require('console');
+// const { log } = require('console');
 require('dotenv').config();
 const Cryptr = require('cryptr');
 const fs = require('fs');
@@ -22,9 +22,9 @@ const readAndDecryptCredentials = () => {
   try {
     const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
     const encryptedData = fs.readFileSync('./encrypted_credentials.txt', 'utf-8');
-    console.log('Encrypted data:', encryptedData);
+    // console.log('Encrypted data:', encryptedData);
     const decryptedData = cryptr.decrypt(encryptedData);
-    console.log('Decrypted data:', decryptedData);
+    // console.log('Decrypted data:', decryptedData);
     return JSON.parse(decryptedData);
   } catch (error) {
     console.error('Error reading or decrypting credentials:', error);
