@@ -252,7 +252,6 @@ h2.catchphrase {
   position: relative;
   overflow: hidden;
   padding-left: 30%;
-  z-index: 10;
   top: 100px;
 }
 
@@ -732,9 +731,10 @@ select option {
 }
 
 .guestInfo-page footer {
-  /* position: relative; */
-  position: absolute;
-  bottom: 0;
+  position: relative;
+  margin-top: 7rem;
+  /* position: absolute;
+  bottom: 0; */
 }
 
 @media (min-width: 819px) {

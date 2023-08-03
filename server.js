@@ -7,19 +7,23 @@ require('dotenv').config();
 const Cryptr = require('cryptr');
 // const fs = require('fs');
 const port = process.env.PORT || 3000;
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true })); // enables us to use forms
 app.use('/public/src', express.static(__dirname + '/public/src'));
 // Redirect HTTP to HTTPS
-app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    res.redirect(`https://${req.hostname}${req.originalUrl}`);
-  } else {
-    next();
-  }
-});
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      res.redirect(`https://${req.hostname}${req.originalUrl}`);
+    } else {
+      next();
+    }
+  });
+}
+
 
 // Instance of Google Sheets API
 const googleSheets = google.sheets({ version: 'v4' });
