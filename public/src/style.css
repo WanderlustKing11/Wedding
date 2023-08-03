@@ -82,7 +82,9 @@ main {
   z-index: 6;
 }
 
-.hamburger .bar, .hamburger::after, .hamburger::before {
+.hamburger .bar,
+.hamburger::after,
+.hamburger::before {
   content: '';
   display: block;
   width: 100%;
@@ -187,7 +189,7 @@ main {
   .menu a:hover {
     color: hsl(50, 100%, 98%);
     transform: scale(105%);
-    background-color: hsla(0, 0%, 100%,0.20);
+    background-color: hsla(0, 0%, 100%, 0.2);
   }
 }
 
@@ -274,6 +276,12 @@ h2.catchphrase::before {
   z-index: 6;
 }
 
+.decorated-stars {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 @keyframes animate {
   0% {
     width: 0;
@@ -286,7 +294,7 @@ h2.catchphrase::before {
 .ink-img1 {
   width: 1.5rem;
   position: absolute;
-  left: 6rem;
+  left: 3rem;
   top: 3.5rem;
   rotate: 180deg;
 }
@@ -294,7 +302,7 @@ h2.catchphrase::before {
 .ink-img2 {
   width: 3rem;
   position: absolute;
-  right: 6rem;
+  right: 3rem;
   bottom: 3.5rem;
   rotate: 180deg;
 }
@@ -388,6 +396,10 @@ h2.catchphrase::before {
   .stars {
     display: none;
   }
+
+  .decorated-stars {
+    display: none;
+  }
 }
 
 /*================
@@ -405,7 +417,7 @@ h2.catchphrase::before {
   border-right: 2px solid #000;
   white-space: nowrap;
   overflow: hidden;
-  animation: cursor .7s step-end infinite alternate;
+  animation: cursor 0.7s step-end infinite alternate;
 }
 
 @keyframes cursor {
@@ -459,7 +471,7 @@ h2.catchphrase::before {
 
   .aboutus-catchphrase {
     font-size: 2.5rem;
-  } 
+  }
 
   .aboutus-wrapper p {
     margin-top: 2rem;
@@ -479,7 +491,7 @@ h2.catchphrase::before {
   background-image: url('./images/DH03_comp.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position-x: -13rem;
+  background-position-x: -12rem;
   background-origin: border-box;
 }
 
@@ -513,7 +525,7 @@ h2.catchphrase::before {
   background-color: transparent;
   border: 3px solid hsl(58, 88%, 94%);
   border-radius: 5px;
-  color:hsl(50, 100%, 94%);
+  color: hsl(50, 100%, 94%);
   font-family: 'Nunito';
   font-weight: 200;
   font-size: 1.5rem;
@@ -521,7 +533,7 @@ h2.catchphrase::before {
   margin-bottom: 1.5rem;
 }
 
-#guest_input_last_name input[type=text] {
+#guest_input_last_name input[type='text'] {
   width: 90%;
   padding-left: 2rem;
   background-color: hsl(58, 88%, 94%, 0.2);
@@ -559,6 +571,12 @@ p.rsvp-error {
 .rsvp-page footer {
   position: absolute;
   bottom: 0;
+}
+
+@media (min-width: 380px) {
+  .rsvp-page {
+    background-position-x: -16rem;
+  }
 }
 
 @media (min-width: 819px) {
@@ -628,7 +646,7 @@ p.rsvp-error {
   gap: 0.5em;
 }
 
-.guestInfo-firstname input[type="radio"] {
+.guestInfo-firstname input[type='radio'] {
   display: grid;
   place-content: center;
   -webkit-appearance: none;
@@ -643,8 +661,8 @@ p.rsvp-error {
   transform: translateY(0.1em);
 }
 
-.guestInfo-firstname input[type="radio"]::before {
-  content: "";
+.guestInfo-firstname input[type='radio']::before {
+  content: '';
   width: 0.3em;
   height: 0.3em;
   border-radius: 50%;
@@ -653,7 +671,7 @@ p.rsvp-error {
   box-shadow: inset 0.3em 0.3em hsl(181, 100%, 82%);
 }
 
-.guestInfo-firstname input[type="radio"]:checked::before {
+.guestInfo-firstname input[type='radio']:checked::before {
   transform: scale(1);
 }
 
@@ -661,12 +679,14 @@ p.rsvp-error {
   font-family: 'Nunito';
 }
 
-.response-label, .guestDiet-label {
+.response-label,
+.guestDiet-label {
   font-family: 'Bacasime_Antique';
   font-size: 1.2rem;
 }
 
-.guestInfo-select select, #guestDiet {
+.guestInfo-select select,
+#guestDiet {
   color: hsl(50, 100%, 94%);
   background-color: transparent;
   font-size: 1.1rem;
@@ -710,7 +730,9 @@ select option {
 }
 
 .guestInfo-page footer {
-  position: relative;
+  /* position: relative; */
+  position: absolute;
+  bottom: 0;
 }
 
 @media (min-width: 819px) {
@@ -719,7 +741,7 @@ select option {
     justify-content: center;
     align-items: center;
   }
-  
+
   .dietary-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -796,11 +818,11 @@ select option {
   color: #fff;
   border-color: hsl(58, 60%, 59%);
   border-radius: 5px;
-  background-color: hsl(0, 0%, 0%, 0.5)
+  background-color: hsl(0, 0%, 0%, 0.5);
 }
 
 .success-wrapper button:active {
-  background-color: hsla(0, 0%, 100%, 0.3)
+  background-color: hsla(0, 0%, 100%, 0.3);
 }
 
 .embroidery-patern {
@@ -858,7 +880,7 @@ select option {
 @media (min-width: 819px) {
   h1.title {
     display: none;
- }
+  }
 
   .photos-page {
     color: #000;
@@ -876,6 +898,9 @@ select option {
 .details-page {
   background-image: url('./images/DH11_comp.jpg');
   background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
   background-repeat: no-repeat;
   background-position-x: 40%;
   background-attachment: fixed;
@@ -888,7 +913,6 @@ select option {
 
 .details-container {
   display: flex;
-  
 }
 
 .details-wrapper {
