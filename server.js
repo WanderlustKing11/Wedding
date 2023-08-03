@@ -1,18 +1,25 @@
 const express = require('express');
-const https = require('https');
-const path = require('path');
-const ejs = require('ejs');
+// const path = require('path');
+// const ejs = require('ejs');
 const { google } = require('googleapis');
 // const { log } = require('console');
 require('dotenv').config();
 const Cryptr = require('cryptr');
-const fs = require('fs');
+// const fs = require('fs');
 const port = process.env.PORT || 3000;
 
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true })); // enables us to use forms
 app.use('/public/src', express.static(__dirname + '/public/src'));
+// Redirect HTTP to HTTPS
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    res.redirect(`https://${req.hostname}${req.originalUrl}`);
+  } else {
+    next();
+  }
+});
 
 // Instance of Google Sheets API
 const googleSheets = google.sheets({ version: 'v4' });
