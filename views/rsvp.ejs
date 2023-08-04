@@ -23,3 +23,15 @@
 
   <%- include('partials/footer'); %>
 
+  <script>
+    // Update the form submission to use encodeURIComponent
+    const form = document.getElementById('guest_input_last_name');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const lastNameInput = document.querySelector('[name="guest_input_last_name"]');
+      const encodedLastName = encodeURIComponent(lastNameInput.value);
+      lastNameInput.value = encodedLastName; // Update the input value to the encoded value
+      form.submit();
+    });
+  </script>
+
