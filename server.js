@@ -84,6 +84,9 @@ app.post('/rsvp', async (req, res) => {
     // Authenticate and get the client
     const client = await authenticate();
 
+    // Decode the last name received from the form
+    const typedName = decodeURIComponent(req.body.guest_input_last_name);
+
     // Read row(s) from spreadsheet
     const getRows = await googleSheets.spreadsheets.values.get({
       auth: client,
@@ -91,7 +94,7 @@ app.post('/rsvp', async (req, res) => {
       range: 'Sheet7!A2:A',
     });
 
-    const typedName = req.body.guest_input_last_name;
+    // const typedName = req.body.guest_input_last_name;
     let sheetNames = getRows.data.values.flat();
 
     if (sheetNames.includes(typedName)) {
